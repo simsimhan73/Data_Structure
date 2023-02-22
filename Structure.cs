@@ -162,6 +162,50 @@
 
             return current != null && comparer.Compare(current.Data, data) == 0 ? true : false;
         }
+
+        public Node<T> GetNode(int index)
+        {
+            Node<T> current = head;
+            while (current != null && --index >= 0)
+            {
+                current = current.Next;
+            }
+
+            if (current != null && index == 0)
+            {
+                return current;
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+        }
+
+        public Node<T> GetNode(T data)
+        {
+            Node<T> current = head;
+            Comparer<T> comparer = Comparer<T>.Default;
+
+            while (current != null && comparer.Compare(current.Data, data) != 0)
+            {
+                current = current.Next;
+            }
+
+            return current != null && comparer.Compare(current.Data, data) == 0 ? current : throw new ArgumentException();
+        }
+
+        public Node<T> GetNode(Node<T> node)
+        {
+            Node<T> current = head;
+
+            while (current != null && current != node)
+            {
+                current = current.Next;
+            }
+
+
+            return current == node ? current : throw new ArgumentException();
+        }
     }
 }
 
@@ -173,7 +217,7 @@ namespace Program
         {
             DataStructure.LinkedList<string> list = new DataStructure.LinkedList<string>("12");
             list.Add("a");
-            Console.WriteLine(list.Contains("a"));
+            Console.WriteLine(list.GetNode(list.GetNode("a")));
         }
     }
 }
